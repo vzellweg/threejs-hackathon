@@ -1,0 +1,19 @@
+{
+  "name": "threejs-hackathon",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vzellweg/threejs-hackathon.git"
+  },
+  "author": "vzellweg",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vzellweg/threejs-hackathon/issues"
+  },
+  "homepage": "https://github.com/vzellweg/threejs-hackathon#readme"
+}
