@@ -83,7 +83,19 @@ material.roughness = 0.4;
 const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.5, 32, 32), material);
 sphere.position.x = -1.5;
 
-const cube = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.75, 0.75), material);
+const cubes = [];
+const cubeFormat = {
+    size: 0.75,
+    margin: 0.1,
+    rate: 0.2,
+};
+gui.add(cubeFormat, "rate", -2, 2, 0.001);
+for (let i = 0; i < 3; i++) {
+    const cube = new THREE.Mesh(new THREE.BoxGeometry(cubeFormat.size, cubeFormat.size, cubeFormat.size), material);
+    cube.position.y += i * (cubeFormat.size + cubeFormat.margin);
+    cubes.push(cube);
+}
+console.log(cubes);
 
 const torus = new THREE.Mesh(new THREE.TorusGeometry(0.3, 0.2, 32, 64), material);
 torus.position.x = 1.5;
@@ -92,7 +104,7 @@ const plane = new THREE.Mesh(new THREE.PlaneGeometry(50, 50), material);
 plane.rotation.x = -Math.PI * 0.5;
 plane.position.y = -0.65;
 
-scene.add(sphere, cube, torus, plane);
+scene.add(sphere, ...cubes, torus, plane);
 
 /**
  * Sizes
@@ -122,8 +134,8 @@ window.addEventListener("resize", () => {
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
 camera.position.x = 1;
-camera.position.y = 1;
-camera.position.z = 2;
+camera.position.y = 1.5;
+camera.position.z = 3;
 scene.add(camera);
 
 // Controls
@@ -148,12 +160,12 @@ const tick = () => {
     const elapsedTime = clock.getElapsedTime();
 
     // Update objects
+    // TODO: make changing spin rate not cause cubes to jump
+    cubes.forEach((cube, i) => (cube.rotation.y = cubeFormat.rate * elapsedTime * (i % 2 ? -1 : 1)));
     sphere.rotation.y = 0.1 * elapsedTime;
-    cube.rotation.y = 0.1 * elapsedTime;
     torus.rotation.y = 0.1 * elapsedTime;
 
     sphere.rotation.x = 0.15 * elapsedTime;
-    cube.rotation.x = 0.15 * elapsedTime;
     torus.rotation.x = 0.15 * elapsedTime;
 
     // Update controls
