@@ -39,5 +39,8 @@
     "bugs": {
         "url": "https://github.com/vzellweg/threejs-hackathon/issues"
     },
-    "homepage": "https://github.com/vzellweg/threejs-hackathon#readme"
+    "homepage": "https://github.com/vzellweg/threejs-hackathon#readme",
+    "devDependencies": {
+        "gh-pages": "^3.2.3"
+    }
 }
