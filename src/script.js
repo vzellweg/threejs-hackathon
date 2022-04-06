@@ -88,7 +88,7 @@ const cube = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.75, 0.75), material);
 const torus = new THREE.Mesh(new THREE.TorusGeometry(0.3, 0.2, 32, 64), material);
 torus.position.x = 1.5;
 
-const plane = new THREE.Mesh(new THREE.PlaneGeometry(5, 5), material);
+const plane = new THREE.Mesh(new THREE.PlaneGeometry(50, 50), material);
 plane.rotation.x = -Math.PI * 0.5;
 plane.position.y = -0.65;
 
