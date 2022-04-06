@@ -168,6 +168,11 @@ const tick = () => {
     sphere.rotation.x = 0.15 * elapsedTime;
     torus.rotation.x = 0.15 * elapsedTime;
 
+    // TODO: Update lights
+    // change
+    // Use sin/cos to point lights in circular direction
+    // Clicking different cube causes different lights to animate
+
     // Update controls
     controls.update();
 
