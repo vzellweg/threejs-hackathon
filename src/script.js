@@ -17,6 +17,19 @@ const canvas = document.querySelector("canvas.webgl");
 const scene = new THREE.Scene();
 
 /**
+ * TextureLoader
+ */
+const cubeTextureLoader = new THREE.CubeTextureLoader();
+const environmentMapTexture = cubeTextureLoader.load([
+    "/textures/environmentMaps/0/px.png",
+    "/textures/environmentMaps/0/nx.png",
+    "/textures/environmentMaps/0/py.png",
+    "/textures/environmentMaps/0/ny.png",
+    "/textures/environmentMaps/0/pz.png",
+    "/textures/environmentMaps/0/nz.png",
+]);
+scene.background = environmentMapTexture;
+/**
  * Lights
  */
 // Ambient light
@@ -79,9 +92,16 @@ scene.add(spotLight.target);
 const material = new THREE.MeshStandardMaterial();
 material.roughness = 0.4;
 const shinyMaterial = new THREE.MeshPhysicalMaterial();
+shinyMaterial.envMap = environmentMapTexture;
+gui.add(shinyMaterial, "displacementScale", 0, 1, 0.0001);
+gui.add(shinyMaterial, "aoMapIntensity", 0, 10, 0.0001);
+// gui.add(material, "normalScale", 0, 1, 0.0001);
+
+gui.add(shinyMaterial, "metalness", 0, 1, 0.01);
+gui.add(shinyMaterial, "roughness", 0, 1, 0.01);
 
 // Objects
-const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.5, 32, 32), material);
+const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.5, 32, 32), shinyMaterial);
 sphere.position.x = -1.5;
 
 const cubes = [];
