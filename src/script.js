@@ -28,7 +28,7 @@ scene.add(ambientLight);
 // Directional light
 const directionalLight = new THREE.DirectionalLight(0x00fffc, 0.3);
 directionalLight.position.set(1, 0.25, 0);
-scene.add(directionalLight);
+// scene.add(directionalLight);
 
 // Hemisphere light
 const hemisphereLight = new THREE.HemisphereLight(0xff0000, 0x0000ff, 0.3);
@@ -78,6 +78,7 @@ scene.add(spotLight.target);
 // Material
 const material = new THREE.MeshStandardMaterial();
 material.roughness = 0.4;
+const shinyMaterial = new THREE.MeshPhysicalMaterial();
 
 // Objects
 const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.5, 32, 32), material);
@@ -100,7 +101,8 @@ console.log(cubes);
 const torus = new THREE.Mesh(new THREE.TorusGeometry(0.3, 0.2, 32, 64), material);
 torus.position.x = 1.5;
 
-const plane = new THREE.Mesh(new THREE.PlaneGeometry(50, 50), material);
+const planeMaterial = new THREE.MeshStandardMaterial({ wireframe: true });
+const plane = new THREE.Mesh(new THREE.PlaneGeometry(50, 50, 50, 50), planeMaterial);
 plane.rotation.x = -Math.PI * 0.5;
 plane.position.y = -0.65;
 
@@ -169,6 +171,7 @@ const tick = () => {
     torus.rotation.x = 0.15 * elapsedTime;
 
     // TODO: Update lights
+    pointLight.position.set(Math.sin(elapsedTime), Math.cos(elapsedTime), pointLight.position.z);
     // change
     // Use sin/cos to point lights in circular direction
     // Clicking different cube causes different lights to animate
