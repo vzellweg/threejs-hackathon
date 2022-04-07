@@ -46,3 +46,17 @@ Nope, so far anything too complex for me has not been critical to the project go
 #### What did I learn?
 
 I learned about lights and shadows in three.js. I learned how easy it is to deploy a static website using `gh-pages`. I learned a little
+
+### Day 4
+
+#### What did I do?
+
+Started messing around with reflections, cubemaps, and animated lights.
+
+#### Any Trouble?
+
+Yes, keeping my scope limited and not getting distracted by cool new features. I think I'm managing well by using github issues religiously though.
+
+#### What did I learn?
+
+I started learning about using ray tracing to create interactive objects. I learned the process of creating cubemaps from hdri images.
