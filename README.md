@@ -15,7 +15,7 @@ npm run deploy
 
 ## Goal
 
-TODO
+Create an interactive 3d scene, where the user can interact with 3d shapes to trigger some actions. 
 
 ## Journal
 
