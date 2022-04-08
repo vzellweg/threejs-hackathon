@@ -1,0 +1,7 @@
+#!/bin/bash
+
+for i in static/textures/environmentMaps/**/*.png
+do 
+    sips -s format jpeg $i --out ${i%.*}".jpg"
+    rm $i
+done

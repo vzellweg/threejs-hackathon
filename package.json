@@ -6,7 +6,8 @@
     "scripts": {
         "build": "webpack --config ./bundler/webpack.prod.js",
         "dev": "webpack serve --config ./bundler/webpack.dev.js",
-        "deploy": "npm run build && gh-pages -d dist"
+        "deploy": "npm run build && gh-pages -d dist",
+        "convert-maps": "sh ./scripts/convert-maps"
     },
     "dependencies": {
         "@babel/core": "^7.16.12",
