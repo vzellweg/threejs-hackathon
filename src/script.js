@@ -9,12 +9,12 @@ import { RectAreaLightHelper } from "three/examples/jsm/helpers/RectAreaLightHel
  */
 // Debug
 const gui = new dat.GUI();
-
 // Canvas
 const canvas = document.querySelector("canvas.webgl");
-
 // Scene
 const scene = new THREE.Scene();
+// Intersected Object
+let INTERSECTED;
 
 /**
  * TextureLoader
@@ -167,6 +167,19 @@ const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
 
 /**
+ * Raycaster
+ */
+const pointer = new THREE.Vector2();
+const raycaster = new THREE.Raycaster();
+
+const onPointerMove = (event) => {
+    pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+    pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
+};
+
+document.addEventListener("mousemove", onPointerMove);
+
+/**
  * Renderer
  */
 const renderer = new THREE.WebGLRenderer({
@@ -201,6 +214,24 @@ const tick = () => {
     // Update controls
     controls.update();
 
+    // Check object intersection
+    // (Taken from: https://github.com/mrdoob/three.js/blob/master/examples/webgl_interactive_cubes.html#L64)
+    raycaster.setFromCamera(pointer, camera);
+    const intersects = raycaster.intersectObjects(scene.children, false);
+
+    if (intersects.length > 0) {
+        if (INTERSECTED != intersects[0].object) {
+            if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
+
+            INTERSECTED = intersects[0].object;
+            INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
+            INTERSECTED.material.emissive.setHex(0xff0000);
+        }
+    } else {
+        if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
+
+        INTERSECTED = null;
+    }
     // Render
     renderer.render(scene, camera);
 
