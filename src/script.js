@@ -3,6 +3,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import * as dat from "lil-gui";
 import { RectAreaLightHelper } from "three/examples/jsm/helpers/RectAreaLightHelper.js";
+import gsap from "gsap";
 
 /**
  * Base
@@ -13,8 +14,6 @@ const gui = new dat.GUI();
 const canvas = document.querySelector("canvas.webgl");
 // Scene
 const scene = new THREE.Scene();
-// Intersected Object
-let INTERSECTED;
 
 /**
  * TextureLoader
@@ -177,7 +176,22 @@ const onPointerMove = (event) => {
     pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
 };
 
+const onPointerClick = (event) => {
+    // Check object intersection
+    // (Taken from: https://github.com/mrdoob/three.js/blob/master/examples/webgl_interactive_cubes.html#L64)
+    const intersects = raycaster.intersectObjects(scene.children, false);
+
+    if (intersects.length > 0) {
+        console.log(`intersected: ${intersects[0].object}`);
+        // Animate selected object
+        gsap.timeline()
+            .to(intersects[0].object.position, { duration: 0.3, z: -1 })
+            .to(intersects[0].object.position, { duration: 0.5, z: 0, ease: "back" });
+    }
+};
+
 document.addEventListener("mousemove", onPointerMove);
+document.addEventListener("mousedown", onPointerClick);
 
 /**
  * Renderer
@@ -214,24 +228,8 @@ const tick = () => {
     // Update controls
     controls.update();
 
-    // Check object intersection
-    // (Taken from: https://github.com/mrdoob/three.js/blob/master/examples/webgl_interactive_cubes.html#L64)
     raycaster.setFromCamera(pointer, camera);
-    const intersects = raycaster.intersectObjects(scene.children, false);
 
-    if (intersects.length > 0) {
-        if (INTERSECTED != intersects[0].object) {
-            if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
-
-            INTERSECTED = intersects[0].object;
-            INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
-            INTERSECTED.material.emissive.setHex(0xff0000);
-        }
-    } else {
-        if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
-
-        INTERSECTED = null;
-    }
     // Render
     renderer.render(scene, camera);
 
