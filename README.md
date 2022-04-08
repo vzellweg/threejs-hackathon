@@ -59,4 +59,4 @@ Yes, keeping my scope limited and not getting distracted by cool new features. I
 
 #### What did I learn?
 
-I started learning about using ray tracing to create interactive objects. I learned the process of creating cubemaps from hdri images.
+I started learning about using ray tracing to create interactive objects. I learned the process of creating cubemaps from hdri images. I started the Shaders chapter of the three.js journey course. I'm hoping to learn enough to be able to use shaders that I find online as materials in three.js.
