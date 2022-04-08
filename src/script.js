@@ -21,12 +21,12 @@ const scene = new THREE.Scene();
  */
 const cubeTextureLoader = new THREE.CubeTextureLoader();
 const environmentMapTexture = cubeTextureLoader.load([
-    "/textures/environmentMaps/0/px.png",
-    "/textures/environmentMaps/0/nx.png",
-    "/textures/environmentMaps/0/py.png",
-    "/textures/environmentMaps/0/ny.png",
-    "/textures/environmentMaps/0/pz.png",
-    "/textures/environmentMaps/0/nz.png",
+    "textures/environmentMaps/0/px.png",
+    "textures/environmentMaps/0/nx.png",
+    "textures/environmentMaps/0/py.png",
+    "textures/environmentMaps/0/ny.png",
+    "textures/environmentMaps/0/pz.png",
+    "textures/environmentMaps/0/nz.png",
 ]);
 scene.background = environmentMapTexture;
 /**
@@ -93,6 +93,8 @@ const material = new THREE.MeshStandardMaterial();
 material.roughness = 0.4;
 const shinyMaterial = new THREE.MeshPhysicalMaterial();
 shinyMaterial.envMap = environmentMapTexture;
+shinyMaterial.metalness = 1;
+shinyMaterial.roughness = 0.12;
 gui.add(shinyMaterial, "displacementScale", 0, 1, 0.0001);
 gui.add(shinyMaterial, "aoMapIntensity", 0, 10, 0.0001);
 // gui.add(material, "normalScale", 0, 1, 0.0001);
