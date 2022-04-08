@@ -15,7 +15,7 @@ npm run deploy
 
 ## Goal
 
-Create an interactive 3d scene, where the user can interact with 3d shapes to trigger some actions. Make the scene look as cool as possible. 
+Create an interactive 3d scene, where the user can interact with 3d shapes to trigger some actions. Make the scene look as cool as possible.
 
 ## Journal
 
@@ -60,3 +60,17 @@ Yes, keeping my scope limited and not getting distracted by cool new features. I
 #### What did I learn?
 
 I started learning about using ray tracing to create interactive objects. I learned the process of creating cubemaps from hdri images. I started the Shaders chapter of the three.js journey course. I'm hoping to learn enough to be able to use shaders that I find online as materials in three.js.
+
+### Day 5
+
+#### What did I do?
+
+Added interactivity to the objects. Created a utility script for compressing cubemap png's to jpg's.
+
+#### Any Trouble?
+
+Yeah I'm not very familiar with bash scripts (I've always used Python or C for projects that required filesystem operations). I had to learn a bit about them in order to write my file conversion script.
+
+#### What did I learn?
+
+That greensock is insanely simple to use and we should be using it on all our projects. I learned that the built-in Mac utility `sips` can be used in bash scripts to do batch file conversions. I learned some basic things about bash scripts.
