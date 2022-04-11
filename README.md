@@ -65,7 +65,7 @@ I started learning about using ray tracing to create interactive objects. I lear
 
 #### What did I do?
 
-Added interactivity to the objects. Created a utility script for compressing cubemap png's to jpg's.
+Added interactivity to the objects. Created a utility script for compressing cubemap png's to jpg's. Downloaded models to import into scene later.
 
 #### Any Trouble?
 
