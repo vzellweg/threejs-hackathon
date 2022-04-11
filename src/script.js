@@ -3,7 +3,9 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import * as dat from "lil-gui";
 import { RectAreaLightHelper } from "three/examples/jsm/helpers/RectAreaLightHelper.js";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import gsap from "gsap";
+import { Vector3 } from "three";
 
 /**
  * Base
@@ -14,6 +16,18 @@ const gui = new dat.GUI();
 const canvas = document.querySelector("canvas.webgl");
 // Scene
 const scene = new THREE.Scene();
+
+/**
+ * Models
+ */
+
+const gltfLoader = new GLTFLoader();
+gltfLoader.load("/models/cat_1/scene.gltf", (gltf) => {
+    console.log(gltf);
+    gltf.scene.scale.set(0.1, 0.1, 0.1);
+    gltf.scene.position.set(0, 0, -3);
+    scene.add(gltf.scene);
+});
 
 /**
  * TextureLoader
@@ -206,13 +220,16 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
  * Animate
  */
 const clock = new THREE.Clock();
+let previousTime = 0;
 
 const tick = () => {
     const elapsedTime = clock.getElapsedTime();
+    const deltaTime = elapsedTime - previousTime;
+    previousTime = elapsedTime;
 
     // Update objects
     // TODO: make changing spin rate not cause cubes to jump
-    cubes.forEach((cube, i) => (cube.rotation.y = cubeFormat.rate * elapsedTime * (i % 2 ? -1 : 1)));
+    cubes.forEach((cube, i) => (cube.rotation.y += cubeFormat.rate * deltaTime * (i % 2 ? -1 : 1)));
     sphere.rotation.y = 0.1 * elapsedTime;
     torus.rotation.y = 0.1 * elapsedTime;
 
