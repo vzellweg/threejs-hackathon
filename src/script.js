@@ -18,18 +18,6 @@ const canvas = document.querySelector("canvas.webgl");
 const scene = new THREE.Scene();
 
 /**
- * Models
- */
-
-const gltfLoader = new GLTFLoader();
-gltfLoader.load("/models/cat_1/scene.gltf", (gltf) => {
-    console.log(gltf);
-    gltf.scene.scale.set(0.1, 0.1, 0.1);
-    gltf.scene.position.set(0, 0, -3);
-    scene.add(gltf.scene);
-});
-
-/**
  * TextureLoader
  */
 const cubeTextureLoader = new THREE.CubeTextureLoader();
@@ -144,6 +132,25 @@ plane.position.y = -0.65;
 scene.add(sphere, ...cubes, torus, plane);
 
 /**
+ * Models
+ */
+
+const gltfLoader = new GLTFLoader();
+let modelObject = null;
+gltfLoader.load("/models/head_woman/scene.gltf", (gltf) => {
+    console.log(gltf);
+    gltf.scene.scale.set(0.05, 0.05, 0.05);
+    gltf.scene.position.set(-1.5, 0.75, 0);
+    gltf.scene.traverse((child) => {
+        if (child instanceof THREE.Mesh) {
+            child.material = shinyMaterial;
+        }
+    });
+    modelObject = gltf.scene;
+    scene.add(gltf.scene);
+});
+
+/**
  * Sizes
  */
 const sizes = {
@@ -233,7 +240,9 @@ const tick = () => {
     sphere.rotation.y = 0.1 * elapsedTime;
     torus.rotation.y = 0.1 * elapsedTime;
 
-    sphere.rotation.x = 0.15 * elapsedTime;
+    if (modelObject) {
+        modelObject.rotation.y = 0.15 * elapsedTime;
+    }
     torus.rotation.x = 0.15 * elapsedTime;
 
     // TODO: Update lights
