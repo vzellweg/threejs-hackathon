@@ -74,3 +74,10 @@ Yeah I'm not very familiar with bash scripts (I've always used Python or C for p
 #### What did I learn?
 
 That greensock is insanely simple to use and we should be using it on all our projects. I learned that the built-in Mac utility `sips` can be used in bash scripts to do batch file conversions. I learned some basic things about bash scripts.
+
+## Attributions
+
+### Models:
+
+-   [Federico.Villani: Cat - Static Pose](https://sketchfab.com/3d-models/cat-static-pose-27b4c1e4338d44278f46d409cd8c9b76)
+-   [mono - Head_Woman_basemesh](https://sketchfab.com/3d-models/head-woman-basemesh-f62bfd9c3ad047e08cd932fef6c40dc6)
