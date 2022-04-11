@@ -17,6 +17,22 @@ npm run deploy
 
 Create an interactive 3d scene, where the user can interact with 3d shapes to trigger some actions. Make the scene look as cool as possible.
 
+## Helpful Resources
+
+### [three.js Journey lesson plan](https://threejs-journey.com/)
+
+Scroll down to section "What will you learn?" Have an understanding of the topics covered in the "Basics" chapter.
+
+### [three.js examples](https://threejs.org/examples/)
+
+### [Poly Haven HDRI's](https://polyhaven.com/hdris)
+
+For use in environment maps.
+
+### [three.js editor](https://threejs.org/editor/)
+
+Helpful for debugging when loading models.
+
 ## Journal
 
 ### Days 1 -2
@@ -81,3 +97,4 @@ That greensock is insanely simple to use and we should be using it on all our pr
 
 -   [Federico.Villani: Cat - Static Pose](https://sketchfab.com/3d-models/cat-static-pose-27b4c1e4338d44278f46d409cd8c9b76)
 -   [mono - Head_Woman_basemesh](https://sketchfab.com/3d-models/head-woman-basemesh-f62bfd9c3ad047e08cd932fef6c40dc6)
+-   [daniellaromanoo - Statue Cat](https://sketchfab.com/3d-models/statue-cat-86b5a7b0a4a348129ebe47f65e80a526)
