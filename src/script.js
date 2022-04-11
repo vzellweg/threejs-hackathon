@@ -6,6 +6,7 @@ import { RectAreaLightHelper } from "three/examples/jsm/helpers/RectAreaLightHel
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import gsap from "gsap";
 import { Vector3 } from "three";
+import { makeNoise4D } from "open-simplex-noise";
 
 /**
  * Base
@@ -17,6 +18,14 @@ const canvas = document.querySelector("canvas.webgl");
 // Scene
 const scene = new THREE.Scene();
 
+const debugVars = {
+    icosahedronRadius: 1,
+    noiseRate: 0.2,
+    noiseAmount: 0.2,
+};
+gui.add(debugVars, "icosahedronRadius", 0.2, 1);
+gui.add(debugVars, "noiseRate", 0.01, 1);
+gui.add(debugVars, "noiseAmount", 0.1, 1);
 /**
  * TextureLoader
  */
@@ -106,6 +115,13 @@ gui.add(shinyMaterial, "roughness", 0, 1, 0.01);
 // Objects
 const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.5, 32, 32), shinyMaterial);
 sphere.position.x = -1.5;
+
+// Deformed Noise Sphere
+const deformedSphereGeometry = new THREE.IcosahedronGeometry(debugVars.icosahedronRadius, 1);
+// Get access to geometry vertices https://jsfiddle.net/prisoner849/wnash36c/
+const deformedSphere = new THREE.Mesh(deformedSphereGeometry, new THREE.MeshNormalMaterial());
+deformedSphere.position.set(2, 2, 0);
+scene.add(deformedSphere);
 
 const cubes = [];
 const cubeFormat = {
@@ -231,13 +247,13 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 const clock = new THREE.Clock();
 let previousTime = 0;
 
+const noise = makeNoise4D(Date.now());
+
 const tick = () => {
     const elapsedTime = clock.getElapsedTime();
     const deltaTime = elapsedTime - previousTime;
     previousTime = elapsedTime;
-
     // Update objects
-    // TODO: make changing spin rate not cause cubes to jump
     cubes.forEach((cube, i) => (cube.rotation.y += cubeFormat.rate * deltaTime * (i % 2 ? -1 : 1)));
     sphere.rotation.y = 0.1 * elapsedTime;
     torus.rotation.y = 0.1 * elapsedTime;
@@ -247,11 +263,28 @@ const tick = () => {
     }
     torus.rotation.x = 0.15 * elapsedTime;
 
-    // TODO: Update lights
     pointLight.position.set(Math.sin(elapsedTime), Math.cos(elapsedTime), pointLight.position.z);
     // change
     // Use sin/cos to point lights in circular direction
     // Clicking different cube causes different lights to animate
+
+    // Apply noise to icosahedron vertices
+    // Position Buffer Attribute https://stackoverflow.com/a/68131171
+    const positionAttribute = deformedSphereGeometry.getAttribute("position");
+    const vertex = new THREE.Vector3();
+    for (var i = 0; i < positionAttribute.count; i++) {
+        vertex.fromBufferAttribute(positionAttribute, i);
+        vertex
+            .normalize()
+            .multiplyScalar(debugVars.icosahedronRadius)
+            .addScaledVector(
+                vertex,
+                debugVars.noiseAmount * noise(vertex.x, vertex.y, vertex.z, elapsedTime * debugVars.noiseRate)
+            );
+        positionAttribute.setXYZ(i, vertex.x, vertex.y, vertex.z);
+    }
+    deformedSphereGeometry.computeVertexNormals();
+    positionAttribute.needsUpdate = true;
 
     // Update controls
     controls.update();
