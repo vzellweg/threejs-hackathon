@@ -137,10 +137,12 @@ scene.add(sphere, ...cubes, torus, plane);
 
 const gltfLoader = new GLTFLoader();
 let modelObject = null;
-gltfLoader.load("/models/head_woman/scene.gltf", (gltf) => {
+gltfLoader.load("models/statue_cat/scene.gltf", (gltf) => {
     console.log(gltf);
-    gltf.scene.scale.set(0.05, 0.05, 0.05);
+    // gltf.scene.scale.set(0.05, 0.05, 0.05);
     gltf.scene.position.set(-1.5, 0.75, 0);
+
+    // Apply Material to every Mesh imported from model
     gltf.scene.traverse((child) => {
         if (child instanceof THREE.Mesh) {
             child.material = shinyMaterial;

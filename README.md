@@ -96,5 +96,4 @@ That greensock is insanely simple to use and we should be using it on all our pr
 ### Models:
 
 -   [Federico.Villani: Cat - Static Pose](https://sketchfab.com/3d-models/cat-static-pose-27b4c1e4338d44278f46d409cd8c9b76)
--   [mono - Head_Woman_basemesh](https://sketchfab.com/3d-models/head-woman-basemesh-f62bfd9c3ad047e08cd932fef6c40dc6)
 -   [daniellaromanoo - Statue Cat](https://sketchfab.com/3d-models/statue-cat-86b5a7b0a4a348129ebe47f65e80a526)
