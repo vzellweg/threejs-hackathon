@@ -274,7 +274,7 @@ const applyNoise = (geometry, elapsedTime) => {
             );
         positionAttribute.setXYZ(i, vertex.x, vertex.y, vertex.z);
     }
-    geometry.computeVertexNormals();
+    // geometry.computeVertexNormals();
     positionAttribute.needsUpdate = true;
 };
 
