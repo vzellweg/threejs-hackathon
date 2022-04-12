@@ -135,7 +135,6 @@ for (let i = 0; i < 3; i++) {
     cube.position.y += i * (cubeFormat.size + cubeFormat.margin);
     cubes.push(cube);
 }
-console.log(cubes);
 
 const torus = new THREE.Mesh(new THREE.TorusGeometry(0.3, 0.2, 32, 64), material);
 torus.position.x = 1.5;
@@ -219,13 +218,21 @@ const onPointerClick = (event) => {
     // Check object intersection
     // (Taken from: https://github.com/mrdoob/three.js/blob/master/examples/webgl_interactive_cubes.html#L64)
     const intersects = raycaster.intersectObjects(scene.children, false);
+    const cubePositions = cubes.map((cube) => cube.position);
 
     if (intersects.length > 0) {
         console.log(`intersected: ${intersects[0].object}`);
         // Animate selected object
+
         gsap.timeline()
             .to(intersects[0].object.position, { duration: 0.3, z: -1 })
             .to(intersects[0].object.position, { duration: 0.5, z: 0, ease: "back" });
+        // if selected is a torus
+        if (intersects[0].object.geometry.type.includes("Torus")) {
+            gsap.timeline()
+                .to(cubePositions, { duration: 0.3, z: -1, stagger: 0.2 })
+                .to(cubePositions, { duration: 0.5, z: 0, ease: "back", stagger: 0.2 });
+        }
     }
 };
 
