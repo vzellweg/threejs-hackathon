@@ -19,11 +19,11 @@ const canvas = document.querySelector("canvas.webgl");
 const scene = new THREE.Scene();
 
 const debugVars = {
-    icosahedronRadius: 1,
+    sphereRadius: 0.6,
     noiseRate: 0.2,
     noiseAmount: 0.2,
 };
-gui.add(debugVars, "icosahedronRadius", 0.2, 1);
+gui.add(debugVars, "sphereRadius", 0.2, 1);
 gui.add(debugVars, "noiseRate", 0.01, 1);
 gui.add(debugVars, "noiseAmount", 0.1, 1);
 /**
@@ -114,14 +114,7 @@ gui.add(shinyMaterial, "roughness", 0, 1, 0.01);
 
 // Objects
 const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.5, 32, 32), shinyMaterial);
-sphere.position.x = -1.5;
-
-// Deformed Noise Sphere
-const deformedSphereGeometry = new THREE.IcosahedronGeometry(debugVars.icosahedronRadius, 1);
-// Get access to geometry vertices https://jsfiddle.net/prisoner849/wnash36c/
-const deformedSphere = new THREE.Mesh(deformedSphereGeometry, new THREE.MeshNormalMaterial());
-deformedSphere.position.set(2, 2, 0);
-scene.add(deformedSphere);
+sphere.position.set(1.5, 1.5, 0);
 
 const cubes = [];
 const cubeFormat = {
@@ -256,6 +249,24 @@ let previousTime = 0;
 
 const noise = makeNoise4D(Date.now());
 
+const applyNoise = (geometry, elapsedTime) => {
+    const positionAttribute = geometry.getAttribute("position");
+    const vertex = new THREE.Vector3();
+    for (var i = 0; i < positionAttribute.count; i++) {
+        vertex.fromBufferAttribute(positionAttribute, i);
+        vertex
+            .normalize()
+            .multiplyScalar(debugVars.sphereRadius)
+            .addScaledVector(
+                vertex,
+                debugVars.noiseAmount * noise(vertex.x, vertex.y, vertex.z, elapsedTime * debugVars.noiseRate)
+            );
+        positionAttribute.setXYZ(i, vertex.x, vertex.y, vertex.z);
+    }
+    geometry.computeVertexNormals();
+    positionAttribute.needsUpdate = true;
+};
+
 const tick = () => {
     const elapsedTime = clock.getElapsedTime();
     const deltaTime = elapsedTime - previousTime;
@@ -277,21 +288,8 @@ const tick = () => {
 
     // Apply noise to icosahedron vertices
     // Position Buffer Attribute https://stackoverflow.com/a/68131171
-    const positionAttribute = deformedSphereGeometry.getAttribute("position");
-    const vertex = new THREE.Vector3();
-    for (var i = 0; i < positionAttribute.count; i++) {
-        vertex.fromBufferAttribute(positionAttribute, i);
-        vertex
-            .normalize()
-            .multiplyScalar(debugVars.icosahedronRadius)
-            .addScaledVector(
-                vertex,
-                debugVars.noiseAmount * noise(vertex.x, vertex.y, vertex.z, elapsedTime * debugVars.noiseRate)
-            );
-        positionAttribute.setXYZ(i, vertex.x, vertex.y, vertex.z);
-    }
-    deformedSphereGeometry.computeVertexNormals();
-    positionAttribute.needsUpdate = true;
+    // applyNoise(deformedSphereGeometry, elapsedTime);
+    applyNoise(sphere.geometry, elapsedTime);
 
     // Update controls
     controls.update();
