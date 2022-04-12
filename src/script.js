@@ -31,12 +31,12 @@ gui.add(debugVars, "noiseAmount", 0.1, 1);
  */
 const cubeTextureLoader = new THREE.CubeTextureLoader();
 const environmentMapTexture = cubeTextureLoader.load([
-    "textures/environmentMaps/0/px.jpg",
-    "textures/environmentMaps/0/nx.jpg",
-    "textures/environmentMaps/0/py.jpg",
-    "textures/environmentMaps/0/ny.jpg",
-    "textures/environmentMaps/0/pz.jpg",
-    "textures/environmentMaps/0/nz.jpg",
+    "textures/environmentMaps/2/px.jpg",
+    "textures/environmentMaps/2/nx.jpg",
+    "textures/environmentMaps/2/py.jpg",
+    "textures/environmentMaps/2/ny.jpg",
+    "textures/environmentMaps/2/pz.jpg",
+    "textures/environmentMaps/2/nz.jpg",
 ]);
 scene.background = environmentMapTexture;
 /**
