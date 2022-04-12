@@ -91,6 +91,20 @@ Yeah I'm not very familiar with bash scripts (I've always used Python or C for p
 
 That greensock is insanely simple to use and we should be using it on all our projects. I learned that the built-in Mac utility `sips` can be used in bash scripts to do batch file conversions. I learned some basic things about bash scripts.
 
+### Day 6
+
+#### What did I do?
+
+Added a cat model to my scene. Created a shape that deforms its vertices over time. Added attributions and resources in the Readme. Adjusted rate usage so inputs in debug panel do not cause jarring jumps in modulation.
+
+#### Any Trouble?
+
+Yeah there was a [change in Three.js a year ago that got rid of the BufferGeometry types](https://discourse.threejs.org/t/three-geometry-will-be-removed-from-core-with-r125/22401). So some of the older examples I found on stackoverflow did not work without modification. Once I figured it out I had a better understanding of three.js though.
+
+#### What did I learn?
+
+How to manipulate a geometry over time by editing it's vertices. How to load 3d models found on sketchfab.
+
 ## Attributions
 
 ### Models:
