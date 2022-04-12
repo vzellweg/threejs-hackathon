@@ -103,7 +103,7 @@ Yeah there was a [change in Three.js a year ago that got rid of the BufferGeomet
 
 #### What did I learn?
 
-How to manipulate a geometry over time by editing it's vertices. How to load 3d models found on sketchfab.
+How to manipulate a geometry over time by editing it's vertices. How to load 3d models found on sketchfab. How to implement gsap staggering on three.js objects.
 
 ## Attributions
 
