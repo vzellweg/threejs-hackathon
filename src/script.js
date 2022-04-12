@@ -7,6 +7,8 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import gsap from "gsap";
 import { Vector3 } from "three";
 import { makeNoise4D } from "open-simplex-noise";
+import testVertexShader from "./shaders/test/vertex.glsl";
+import testFragmentShader from "./shaders/test/fragment.glsl";
 
 /**
  * Base
@@ -112,6 +114,12 @@ gui.add(shinyMaterial, "aoMapIntensity", 0, 10, 0.0001);
 gui.add(shinyMaterial, "metalness", 0, 1, 0.01);
 gui.add(shinyMaterial, "roughness", 0, 1, 0.01);
 
+// shader material
+let shaderMaterial = new THREE.ShaderMaterial({
+    vertexShader: testVertexShader,
+    fragmentShader: testFragmentShader,
+    side: THREE.DoubleSide,
+});
 // Objects
 const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.5, 32, 32), shinyMaterial);
 sphere.position.set(1.5, 1.5, 0);
@@ -190,11 +198,14 @@ const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 
 camera.position.x = 1;
 camera.position.y = 1.5;
 camera.position.z = 3;
+// camera.lookAt();
 scene.add(camera);
 
 // Controls
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
+// Initially, point camera slightly above origin
+controls.target = new THREE.Vector3(0, 1, 0);
 
 /**
  * Raycaster
