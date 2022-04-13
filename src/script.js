@@ -141,9 +141,9 @@ const torus = new THREE.Mesh(new THREE.TorusGeometry(0.3, 0.2, 32, 64), material
 torus.position.x = 1.5;
 
 const planeMaterial = new THREE.MeshStandardMaterial({ wireframe: true });
-const plane = new THREE.Mesh(new THREE.PlaneGeometry(50, 50, 50, 50), planeMaterial);
+const plane = new THREE.Mesh(new THREE.PlaneGeometry(25, 25, 25, 25), shinyMaterial);
 plane.rotation.x = -Math.PI * 0.5;
-plane.position.y = -0.65;
+plane.position.y = -1;
 
 scene.add(sphere, ...cubes, torus, plane);
 
