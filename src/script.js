@@ -8,6 +8,7 @@ import gsap from "gsap";
 import { Vector3 } from "three";
 import { makeNoise4D } from "open-simplex-noise";
 import testFragmentShader from "./shaders/shadertoy/silexars - Creation.glsl";
+import testVertexShader from "./shaders/shadertoy/vertex.glsl";
 
 /**
  * Base
@@ -122,7 +123,8 @@ const uniforms = {
 };
 let shaderMaterial = new THREE.ShaderMaterial({
     fragmentShader: testFragmentShader,
-    // side: THREE.DoubleSide,
+    vertexShader: testVertexShader,
+    side: THREE.DoubleSide,
     uniforms: uniforms,
 });
 // Objects
