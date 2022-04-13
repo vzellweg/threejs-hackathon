@@ -131,7 +131,7 @@ const cubeFormat = {
     rate: 0.2,
 };
 gui.add(cubeFormat, "rate", -2, 2, 0.001);
-for (let i = 0; i < 3; i++) {
+for (let i = 0; i < 4; i++) {
     const cube = new THREE.Mesh(new THREE.BoxGeometry(cubeFormat.size, cubeFormat.size, cubeFormat.size), material);
     cube.position.y += i * (cubeFormat.size + cubeFormat.margin);
     cubes.push(cube);
