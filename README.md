@@ -105,6 +105,20 @@ Yeah there was a [change in Three.js a year ago that got rid of the BufferGeomet
 
 How to manipulate a geometry over time by editing it's vertices. How to load 3d models found on sketchfab. How to implement gsap staggering on three.js objects.
 
+### Day 7
+
+#### What did I do?
+
+Converted an old HDRI image from my library into a cubemap. Tweaked arrangement of objects. Looked into using shaders as materials.
+
+#### Any Trouble?
+
+I did not have enough time to successfully convert a shadertoy shader to use as a material.
+
+#### What did I learn?
+
+A bunch of stuff about shaders. I began the three.js Journey "shaders" lesson and started reading the [shadertoy page in the three.js docs](https://threejs.org/manual/?q=shadertoy#en/shadertoy)
+
 ## Attributions
 
 ### Models:
