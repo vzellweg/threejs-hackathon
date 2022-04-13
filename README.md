@@ -119,6 +119,20 @@ I did not have enough time to successfully convert a shadertoy shader to use as 
 
 A bunch of stuff about shaders. I began the three.js Journey "shaders" lesson and started reading the [shadertoy page in the three.js docs](https://threejs.org/manual/?q=shadertoy#en/shadertoy)
 
+### Day 8
+
+#### What did I do?
+
+Got a cool shader to work as a material for the plane
+
+#### Any Trouble?
+
+Yeah shaders are confusing! I still don't have a comprehensive understanding of them
+
+#### What did I learn?
+
+More stuff about shaders. I figured out how to refactor shadertoy shaders for use in three.js. I'm getting a better grasp of uniforms and varyings, and how they are passed between three, the vertex shader, and the fragment shader.
+
 ## Attributions
 
 ### Models:
