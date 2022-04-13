@@ -7,8 +7,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import gsap from "gsap";
 import { Vector3 } from "three";
 import { makeNoise4D } from "open-simplex-noise";
-import testVertexShader from "./shaders/test/vertex.glsl";
-import testFragmentShader from "./shaders/test/fragment.glsl";
+import testFragmentShader from "./shaders/shadertoy/silexars - Creation.glsl";
 
 /**
  * Base
@@ -22,12 +21,14 @@ const scene = new THREE.Scene();
 
 const debugVars = {
     sphereRadius: 0.6,
-    noiseRate: 0.2,
-    noiseAmount: 0.2,
+    noiseRate: 0.4,
+    noiseAmount: 0.4,
+    shaderRate: 0.2,
 };
 gui.add(debugVars, "sphereRadius", 0.2, 1);
 gui.add(debugVars, "noiseRate", 0.01, 1);
 gui.add(debugVars, "noiseAmount", 0.1, 1);
+gui.add(debugVars, "shaderRate", 0.1, 1);
 /**
  * TextureLoader
  */
@@ -115,10 +116,14 @@ gui.add(shinyMaterial, "metalness", 0, 1, 0.01);
 gui.add(shinyMaterial, "roughness", 0, 1, 0.01);
 
 // shader material
+const uniforms = {
+    iTime: { value: 0 },
+    iResolution: { value: new THREE.Vector3() },
+};
 let shaderMaterial = new THREE.ShaderMaterial({
-    vertexShader: testVertexShader,
     fragmentShader: testFragmentShader,
-    side: THREE.DoubleSide,
+    // side: THREE.DoubleSide,
+    uniforms: uniforms,
 });
 // Objects
 const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.5, 32, 32), shinyMaterial);
@@ -141,7 +146,7 @@ const torus = new THREE.Mesh(new THREE.TorusGeometry(0.3, 0.2, 32, 64), material
 torus.position.x = 1.5;
 
 const planeMaterial = new THREE.MeshStandardMaterial({ wireframe: true });
-const plane = new THREE.Mesh(new THREE.PlaneGeometry(25, 25, 25, 25), shinyMaterial);
+const plane = new THREE.Mesh(new THREE.PlaneGeometry(25, 25, 25, 25), shaderMaterial);
 plane.rotation.x = -Math.PI * 0.5;
 plane.position.y = -1;
 
@@ -252,6 +257,10 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
+// Init uniforms
+uniforms.iResolution.value.set(canvas.width, canvas.height, 1);
+uniforms.iTime.value = 0;
+
 /**
  * Animate
  */
@@ -282,6 +291,8 @@ const tick = () => {
     const elapsedTime = clock.getElapsedTime();
     const deltaTime = elapsedTime - previousTime;
     previousTime = elapsedTime;
+    // Update uniform tiem for shader
+    uniforms.iTime.value = elapsedTime * debugVars.shaderRate;
     // Update objects
     cubes.forEach((cube, i) => (cube.rotation.y += cubeFormat.rate * deltaTime * (i % 2 ? -1 : 1)));
     sphere.rotation.y = 0.1 * elapsedTime;
