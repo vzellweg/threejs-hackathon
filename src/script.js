@@ -24,7 +24,7 @@ const debugVars = {
     sphereRadius: 0.6,
     noiseRate: 0.4,
     noiseAmount: 0.4,
-    shaderRate: 0.2,
+    shaderRate: 0.1,
 };
 gui.add(debugVars, "sphereRadius", 0.2, 1);
 gui.add(debugVars, "noiseRate", 0.01, 1);
@@ -203,8 +203,8 @@ window.addEventListener("resize", () => {
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
 camera.position.x = 1;
-camera.position.y = 1.5;
-camera.position.z = 3;
+camera.position.y = 2;
+camera.position.z = 4;
 // camera.lookAt();
 scene.add(camera);
 
@@ -294,7 +294,7 @@ const tick = () => {
     const deltaTime = elapsedTime - previousTime;
     previousTime = elapsedTime;
     // Update uniform tiem for shader
-    uniforms.iTime.value = elapsedTime * debugVars.shaderRate;
+    uniforms.iTime.value = 1 + elapsedTime * debugVars.shaderRate;
     // Update objects
     cubes.forEach((cube, i) => (cube.rotation.y += cubeFormat.rate * deltaTime * (i % 2 ? -1 : 1)));
     sphere.rotation.y = 0.1 * elapsedTime;
