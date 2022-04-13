@@ -1,5 +1,8 @@
+
 varying vec2 vUv;
 
+// Simple vertex shader for using shadertoy shaders as materials
+// https://discourse.world/h/2019/01/17/Advanced-Three.js:shader-materials-and-post-processing
 void main() {
     vUv = uv;
 
